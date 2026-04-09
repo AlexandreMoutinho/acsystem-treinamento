@@ -1,117 +1,4 @@
-<script>
-'use strict';
-const MODS=[
- {id:'m00',lbl:'M00',title:['Instruções','do Curso'],grp:'fundamentos',lvl:'Iniciante',hrs:'1h',em:'📋',topics:[
-   {label:'00.1 Bem-vindo',items:['Visão geral: 13 escopos progressivos','Pré-req: Windows 10/11 + Power Automate','Ambiente: PAD versão mais recente','Suporte: Microsoft Learn + Power Users']},
-   {label:'00.2 Estrutura',items:['M0-1: Fundamentos RPA · 4h · Iniciante','M2-6: Desktop Automation · 12h · Interm.','M7-10: Integração Avançada · 10h · Avç.','M11-12: Cloud + APIs + IA · 8h · Avç.']},
- ]},
- {id:'m01',lbl:'M01',title:['Introdução RPA','+ Power Platform'],grp:'fundamentos',lvl:'Iniciante',hrs:'3h',em:'🚀',topics:[
-   {label:'01.1 O que é RPA?',items:['Reduz erros manuais','Aumenta velocidade de processamento','Libera para tarefas estratégicas','Casos: faturas, web scraping, relatórios']},
-   {label:'01.2 Power Platform',items:['Power Automate: Cloud + Desktop Flows','Power Apps: aplicações low-code','Power BI: análise e visualização','Dataverse: base de dados centralizada']},
-   {label:'01.3 Tipos de Fluxos',items:['Cloud Automated: disparo por evento','Cloud Instant: manual (botão)','Cloud Scheduled: recorrência','Desktop Flows: UI, Web, Excel, PDF']},
- ]},
- {id:'m02',lbl:'M02',title:['Variáveis,','Condições e Loops'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'🔧',topics:[
-   {label:'02.1 Variáveis',items:['Tipos: Text, Number, Boolean','Tipos: List, Table, DateTime','Inicializar, modificar e utilizar','Escopo: local vs global']},
-   {label:'02.2 Expressões',items:['Operadores: + - * / == != > <','Lógicos: AND, OR, NOT','Funções: concat(), length(), replace()','Data: now(), addDays(), format()']},
-   {label:'02.3 Condições',items:['IF / THEN / ELSE / END IF','Switch / Case para múltiplos valores','Operadores AND, OR aninhados','Condições em blocos de erro']},
-   {label:'02.4 Loops',items:['For Each: iterar listas e tabelas','While: loop com condição booleana','Loop com índice numérico','Exit Loop / Next Iteration']},
- ]},
- {id:'m03',lbl:'M03',title:['CSV, Excel e','Automação Web'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'📊',topics:[
-   {label:'03.1 CSV',items:['Ler CSV para DataTable','Escrever linhas no CSV','Configurar separador e encoding','Processar cada linha em loop']},
-   {label:'03.2 Excel',items:['Abrir, ler e escrever células','Criar planilhas e formatar dados','Navegar por abas e linhas','Fechar instância corretamente']},
-   {label:'03.3 Web',items:['Recording de ações no browser','Seletores XPath e CSS','Preencher campos com variáveis','Aguardar elemento carregar']},
- ]},
- {id:'m04',lbl:'M04',title:['Tratamento','de Erros'],grp:'desktop',lvl:'Intermediário',hrs:'2h',em:'🛡️',topics:[
-   {label:'04.1 Try-Catch',items:['TRY: executar bloco principal','CATCH: capturar exceção por tipo','FINALLY: fechar conexões sempre','Relação de erros críticos']},
-   {label:'04.2 Logging',items:['Formato: [datetime] LEVEL: contexto','Incluir stack trace do erro','Notificação via email / Teams','Rotacionar logs automaticamente']},
- ]},
- {id:'m05',lbl:'M05',title:['Subflows e','UI Automation'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'🧩',topics:[
-   {label:'05.1 Subflows',items:['Fluxo dentro de fluxo (DRY)','Definir parâmetros Input e Output','Modularizar por responsabilidade','Reutilizar em múltiplos projetos']},
-   {label:'05.2 UI Automation',items:['Registar ações de mouse e teclado','OCR para texto em imagens','Seletores: XPath, CSS, ID, Name','Image-based automation (fallback)']},
- ]},
- {id:'m06',lbl:'M06',title:['PDFs, Arquivos','e Regex'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'📄',topics:[
-   {label:'06.1 PDFs',items:['Extrair texto completo via OCR','Extrair imagens embedadas','Mesclar e dividir páginas','Preencher campos de formulário PDF']},
-   {label:'06.2 Regex',items:['CPF: ^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$','Email: ^[^@]+@[^@]+\\.[^@]+$','Telefone BR: +55 11 98765-4321','Datas, CEP e valores monetários']},
- ]},
- {id:'m07',lbl:'M07',title:['Scripts e','Bases de Dados'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'💾',topics:[
-   {label:'07.1 PowerShell',items:['Automação Windows, AD, Exchange','Executar do PAD e capturar output','Passar parâmetros e ler retorno','Office 365 via cmdlets']},
-   {label:'07.2 Python',items:['Processamento de dados e ML','Integrar bibliotecas (pandas, etc.)','Input/output via variáveis PAD','Instalar dependências no ambiente']},
-   {label:'07.3 SQL',items:['Conectar: SQL Server, MySQL, PG','Executar SELECT, INSERT, UPDATE','Transações com Rollback em erro','Stored procedures e parâmetros']},
- ]},
- {id:'m08',lbl:'M08',title:['Boas Práticas','em RPA'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'⭐',topics:[
-   {label:'08.1 Padrões',items:['Main Flow → Subflows por função','Validar Entrada → Processar dados','Tratar Erro → Logar resultado','Separar: validar, transformar, persistir']},
-   {label:'08.2 Performance',items:['Evitar loops desnecessários','Cache de resultados intermediários','Monitorizar tempos de execução','Retry automático para falhas transitórias']},
-   {label:'08.3 Segurança',items:['Credenciais: variáveis de ambiente','PII: criptografar e mascarar em logs','Auditoria: rastrear toda execução','Sanitizar e validar inputs do usuário']},
-   {label:'08.4 Manutenção',items:['Documentação clara no código','Versionamento e controle de mudanças','Testes com dados reais e edge cases','Alertas automáticos para falhas']},
- ]},
- {id:'m09',lbl:'M09',title:['Cloud e','Conectores'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'☁️',topics:[
-   {label:'09.1 Cloud Flows',items:['Automated: evento (arquivo, email)','Instant: manual via botão / app','Scheduled: horário e recorrência','Múltiplos gatilhos por fluxo']},
-   {label:'09.2 Conectores',items:['Microsoft: Teams, SharePoint, Outlook','Google: Sheets, Drive, Gmail','SAP, Salesforce, Jira, SQL Server','500+ conectores disponíveis']},
-   {label:'09.3 Híbrido',items:['Cloud recebe evento ou email','→ Chama Desktop Flow via gateway','→ Desktop extrai dados locais','→ Cloud grava em SharePoint / BD']},
-   {label:'09.4 Gateway',items:['Acesso a BDs locais da Cloud','Conexão encriptada e segura','Instalação na máquina local','Suporte a múltiplos gateways']},
- ]},
- {id:'m10',lbl:'M10',title:['Fluxos Agendados','e Eventos'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'⏰',topics:[
-   {label:'10.1 Recorrência',items:['Diário: mesma hora todo dia','Semanal: dias e horários específicos','Mensal: dia do mês configurável','Customizado: intervalo livre']},
-   {label:'10.2 Eventos',items:['Arquivo criado: SharePoint / OneDrive','Email recebido: Outlook / Gmail','Webhook: evento HTTP customizado','Social: Twitter / LinkedIn mentions']},
-   {label:'10.3 Concorrência',items:['Limitar execuções simultâneas','Evitar race conditions em dados','Fila de processamento (queue)','Mutex: exclusão mútua de recursos']},
- ]},
- {id:'m11',lbl:'M11',title:['APIs, AI Builder','e Formulários'],grp:'cloud',lvl:'Avançado',hrs:'2h',em:'🤖',topics:[
-   {label:'11.1 HTTP',items:['Métodos: GET, POST, PUT, DELETE','Headers: Authorization, Content-Type','Body: JSON, XML, Form-data','Autenticação: Bearer Token / Basic']},
-   {label:'11.2 Parse JSON',items:['Estruturar respostas da API','Extrair campos aninhados com schema','Tipar dados: string, number, boolean','Gerar schema automaticamente do sample']},
-   {label:'11.3 AI Builder',items:['Invoice Processing (faturas)','Receipt Processing (recibos)','Entity Extraction (entidades texto)','Integrar modelo nos steps do fluxo']},
-   {label:'11.4 Formulários',items:['Campos: Texto, Número, Data','Dropdown, Arquivo, Booleano','Validação: obrigatório, range, padrão','Disparar fluxo com dados do form']},
- ]},
- {id:'m12',lbl:'M12',title:['Document Processing','+ Projeto Final'],grp:'cloud',lvl:'Avançado',hrs:'2h',em:'🎯',topics:[
-   {label:'12.1 Objetivo',items:['API que recebe documento Base64','Processa com AI Builder (fatura)','Retorna campos extraídos em JSON','Validação e tratamento robusto']},
-   {label:'12.2 7 Etapas',items:['1. Gatilho HTTP (POST)','2. Parsing: decodificar Base64','3. AI Builder: extrair campos','4-7: Transformar→Validar→Erro→Response']},
-   {label:'12.3 Validação',items:['Extrai: invoiceNumber, date, total','Extrai: vendorName, lineItems','Valida: totalAmount > 0 e date ≤ hoje','Valida: lineItems.length > 0']},
-   {label:'12.4 Response',items:['200: {status, timestamp, data}','400: VALIDATION_ERROR + detalhes','500: INTERNAL_ERROR + mensagem','Estrutura JSON padronizada']},
-   {label:'12.5 Logging',items:['Data, hora, operação, status final','Entrada: fileName e documentType','Saída: campos extraídos pelo AI','Duração, usuário, IP do cliente']},
-   {label:'12.6 Competências',items:['Cloud Flows profissionais','Processamento com AI Builder','APIs HTTP estruturadas','Integração completa Cloud + Desktop']},
- ]},
- {id:'m13',lbl:'M13',title:['Bibliografia','e Recursos'],grp:'recursos',lvl:'Referência',hrs:'—',em:'📚',topics:[
-   {label:'Fundamentos',items:['PAD Overview & Install (docs)','Microsoft Learn — Power Automate','Introdução ao RPA (learn.microsoft)','Power Platform Overview + Tipos de Fluxos']},
-   {label:'Desktop',items:['Variáveis, Expressões, Condições, Loops','CSV, Excel, Web Recording','Erros, Subflows, UI Automation, OCR','PDFs, Regex, Seletores']},
-   {label:'Integração',items:['PowerShell, Python, VBScript, SQL','Best Practices + Business Guidance','Cloud Flows, Conectores, Data Gateway','Recurrence, Triggers, Concurrency']},
-   {label:'Cloud & IA',items:['HTTP Action + Parse JSON','AI Builder: Invoice / Document','HTTP Webhooks + Run After','Manual Triggers']},
-   {label:'Comunidade',items:['Power Users Community (100k+ membros)','GitHub Samples — Microsoft','PL-100: Power Platform App Creator','PL-200/500: Consultant / Architect']},
- ]},
-];
-const CF={R1:340,TS:142,MW:162,MH:82,TW:164,TH:38,RW:192,RH:82};
-const GRP={fundamentos:{bg:'#FFFBEB',bdr:'#F0C040',txt:'#92400E'},desktop:{bg:'#EFF6FF',bdr:'#60A5FA',txt:'#1E40AF'},avancado:{bg:'#ECFDF5',bdr:'#34D399',txt:'#065F46'},cloud:{bg:'#F5F3FF',bdr:'#A78BFA',txt:'#4C1D95'},recursos:{bg:'#F9FAFB',bdr:'#9CA3AF',txt:'#374151'}};
-const LVC={'Iniciante':'#F59E0B','Intermediário':'#3B82F6','Avançado':'#10B981','Referência':'#9CA3AF'};
-const exp=new Set();
-let vp={tx:0,ty:0,s:1},drag=null,isFirstRender=true;
-const NS='http://www.w3.org/2000/svg';
-function E(tag,a={}){const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(a))e.setAttribute(k,v);return e;}
-function T(text,x,y,a={}){const t=E('text',{x,y,...a});t.textContent=text;return t;}
-function qcurve(x1,y1,x2,y2,bow=32){const mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy)||1;return`M${x1},${y1} Q${mx-dy/len*bow},${my+dx/len*bow} ${x2},${y2}`;}
-function mPos(i){const a=(i/MODS.length*2*Math.PI)-Math.PI/2;return{cx:Math.cos(a)*CF.R1,cy:Math.sin(a)*CF.R1,ang:a};}
-function tPos(ang,j){const r=CF.R1+CF.TS*(j+1);return{cx:Math.cos(ang)*r,cy:Math.sin(ang)*r};}
-function render(){
-  const gc=document.getElementById('gc'),gn=document.getElementById('gn');
-  gc.innerHTML='';gn.innerHTML='';
-  gc.appendChild(E('circle',{cx:0,cy:0,r:CF.R1,fill:'none',stroke:'#D8D8CE','stroke-width':'1','stroke-dasharray':'3,9',opacity:'.65'}));
-  MODS.forEach((mod,i)=>{
-    const{cx,cy,ang}=mPos(i),col=GRP[mod.grp];
-    gc.appendChild(E('path',{d:qcurve(0,0,cx,cy,32),stroke:col.bdr,'stroke-width':'2.1','stroke-opacity':'.38',fill:'none'}));
-    if(exp.has(mod.id)){mod.topics.forEach((_,j)=>{const f=j===0?{cx,cy}:tPos(ang,j-1),t=tPos(ang,j);gc.appendChild(E('path',{d:`M${f.cx},${f.cy}L${t.cx},${t.cy}`,stroke:col.bdr,'stroke-width':'1.4','stroke-opacity':'.4','stroke-dasharray':'3,4',fill:'none'}));});}
-  });
-  drawRoot(gn);
-  MODS.forEach((mod,i)=>{if(!exp.has(mod.id))return;const{ang}=mPos(i);mod.topics.forEach((topic,j)=>drawTopic(gn,tPos(ang,j),topic,GRP[mod.grp],j));});
-  MODS.forEach((mod,i)=>drawModule(gn,mod,mPos(i),GRP[mod.grp],exp.has(mod.id)));
-  if(isFirstRender){isFirstRender=false;const root=gn.querySelector('.root-g');if(root){root.style.opacity='0';setTimeout(()=>{root.style.transition='opacity .5s';root.style.opacity='1';},60);}[...gn.querySelectorAll('.mod-g')].forEach((g,i)=>{g.style.opacity='0';setTimeout(()=>{g.style.transition='opacity .3s';g.style.opacity='1';},130+i*30);});}
-}
-function drawRoot(p){
-  const g=E('g',{transform:`translate(${-CF.RW/2},${-CF.RH/2})`,class:'root-g'});
-  const W=CF.RW,H=CF.RH;
-  g.appendChild(E('rect',{x:-4,y:-4,width:W+8,height:H+8,rx:18,fill:'#BFDBFE',opacity:'.25',filter:'url(#fm)'}));
-  g.appendChild(E('rect',{width:W,height:H,rx:14,fill:'url(#g-root)',stroke:'#3B82F6','stroke-width':'2.2',filter:'url(#fb)'}));
-  g.appendChild(E('line',{x1:48,y1:14,x2:48,y2:H-14,stroke:'#BFDBFE','stroke-width':'1'}));
-  g.appendChild(E('circle',{cx:24,cy:H/2,r:14,fill:'#EFF6FF'}));
-  g.appendChild(T('🚀',24,H/2+5,{'text-anchor':'middle','font-size':'17'}));
-  g.appendChild(T('ACSYSTEM',57,H/2-8,{'font-size':'14','font-weight':'800',fill:'#1E3A5F','font-family':'inherit','letter-spacing':'-.3px'}));
-  g.appendChild(T('Solutions',57,H/2+9,{'font-size':'10','font-weight':'700',fill:'#5B8FC8','font-family':'inherit','letter-spacing':'1px'}));
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -185,19 +72,32 @@ body{display:flex;flex-direction:column}
     <button class="cbtn" id="btn-col" style="padding:0 10px;font-size:11px">▲ Recolher</button>
   </div>
 </div>
+
 <div id="canvas">
   <svg id="mindmap" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <filter id="fs" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#000" flood-opacity=".065"/></filter>
-      <filter id="fm" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity=".09"/></filter>
-      <filter id="fb" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#3B82F6" flood-opacity=".2"/></filter>
-      <pattern id="pdots" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx=".7" cy=".7" r=".7" fill="#C0C0B6" opacity=".55"/></pattern>
-      <linearGradient id="g-root" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FFFFFF"/><stop offset="100%" style="stop-color:#EFF6FF"/></linearGradient>
+      <filter id="fs" x="-60%" y="-60%" width="220%" height="220%">
+        <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#000" flood-opacity=".065"/>
+      </filter>
+      <filter id="fm" x="-60%" y="-60%" width="220%" height="220%">
+        <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity=".09"/>
+      </filter>
+      <filter id="fb" x="-80%" y="-80%" width="260%" height="260%">
+        <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#3B82F6" flood-opacity=".2"/>
+      </filter>
+      <pattern id="pdots" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+        <circle cx=".7" cy=".7" r=".7" fill="#C0C0B6" opacity=".55"/>
+      </pattern>
+      <linearGradient id="g-root" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#FFFFFF"/>
+        <stop offset="100%" style="stop-color:#EFF6FF"/>
+      </linearGradient>
     </defs>
     <rect width="100%" height="100%" fill="#F5F5F0"/>
     <rect width="100%" height="100%" fill="url(#pdots)"/>
     <g id="vp"><g id="gc"></g><g id="gn"></g></g>
   </svg>
+
   <div id="legend">
     <h4>Trilhas de Aprendizagem</h4>
     <div class="li"><div class="ld" style="background:#F0C040"></div>Fundamentos (M00–M01) · 4h</div>
@@ -206,17 +106,24 @@ body{display:flex;flex-direction:column}
     <div class="li"><div class="ld" style="background:#A78BFA"></div>Cloud + APIs + IA (M11–M12) · 8h</div>
     <div class="li"><div class="ld" style="background:#9CA3AF"></div>Recursos &amp; Bibliografia (M13)</div>
   </div>
+
   <div id="stats">
     <div class="stat"><div class="stat-n">14</div><div class="stat-l">Módulos</div></div>
     <div class="stat"><div class="stat-n">34h</div><div class="stat-l">Conteúdo</div></div>
     <div class="stat"><div class="stat-n">47</div><div class="stat-l">Tópicos</div></div>
     <div class="stat"><div class="stat-n" id="sn-i">0</div><div class="stat-l">Itens</div></div>
   </div>
+
   <div id="hint">🖱 Clique nos módulos para expandir · Hover nos tópicos para ver detalhes · Scroll = zoom · F = Fit</div>
   <div id="tt"></div>
 </div>
+
 <script>
 'use strict';
+
+// ══════════════════════════════════════════════════════
+// DATA — topics = [{label, items[]}]
+// ══════════════════════════════════════════════════════
 const MODS=[
  {id:'m00',lbl:'M00',title:['Instruções','do Curso'],grp:'fundamentos',lvl:'Iniciante',hrs:'1h',em:'📋',topics:[
    {label:'00.1 Bem-vindo',items:['Visão geral: 13 escopos progressivos','Pré-req: Windows 10/11 + Power Automate','Ambiente: PAD versão mais recente','Suporte: Microsoft Learn + Power Users']},
@@ -233,3 +140,288 @@ const MODS=[
    {label:'02.3 Condições',items:['IF / THEN / ELSE / END IF','Switch / Case para múltiplos valores','Operadores AND, OR aninhados','Condições em blocos de erro']},
    {label:'02.4 Loops',items:['For Each: iterar listas e tabelas','While: loop com condição booleana','Loop com índice numérico','Exit Loop / Next Iteration']},
  ]},
+ {id:'m03',lbl:'M03',title:['CSV, Excel e','Automação Web'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'📊',topics:[
+   {label:'03.1 Arquivos CSV',items:['Ler CSV para DataTable','Escrever linhas no CSV','Configurar separador e encoding','Processar cada linha em loop']},
+   {label:'03.2 Excel (XLSX)',items:['Abrir, ler e escrever células','Criar planilhas e formatar dados','Navegar por abas e linhas','Fechar instância corretamente']},
+   {label:'03.3 Automação Web',items:['Recording de ações no browser','Seletores XPath e CSS','Preencher campos com variáveis','Aguardar elemento carregar']},
+ ]},
+ {id:'m04',lbl:'M04',title:['Tratamento','de Erros'],grp:'desktop',lvl:'Intermediário',hrs:'2h',em:'🛡️',topics:[
+   {label:'04.1 Try-Catch',items:['TRY: executar bloco principal','CATCH: capturar exceção por tipo','FINALLY: fechar conexões sempre','Relançar erros críticos']},
+   {label:'04.2 Logging',items:['Formato: [datetime] LEVEL: contexto','Incluir stack trace do erro','Notificação via email / Teams','Rotacionar logs — sem crescimento infinito']},
+ ]},
+ {id:'m05',lbl:'M05',title:['Subflows e','UI Automation'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'🧩',topics:[
+   {label:'05.1 Subflows',items:['Fluxo dentro de fluxo (DRY)','Definir parâmetros Input e Output','Modularizar por responsabilidade','Reutilizar em múltiplos projetos']},
+   {label:'05.2 UI Automation',items:['Registar ações de mouse e teclado','OCR para texto em imagens','Seletores: XPath, CSS, ID, Name','Image-based automation (fallback)']},
+ ]},
+ {id:'m06',lbl:'M06',title:['PDFs, Arquivos','e Regex'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'📄',topics:[
+   {label:'06.1 Operações PDF',items:['Extrair texto completo via OCR','Extrair imagens embedadas','Mesclar e dividir páginas','Preencher campos de formulário PDF']},
+   {label:'06.2 Regex',items:['CPF: ^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$','Email: ^[^@]+@[^@]+\\.[^@]+$','Telefone BR: +55 11 98765-4321','Datas, CEP e valores monetários']},
+ ]},
+ {id:'m07',lbl:'M07',title:['Scripts e','Bases de Dados'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'💾',topics:[
+   {label:'07.1 PowerShell',items:['Automação Windows, AD, Exchange','Executar do PAD e capturar output','Passar parâmetros e ler retorno','Office 365 via cmdlets']},
+   {label:'07.2 Python',items:['Processamento de dados e ML','Integrar bibliotecas (pandas, etc.)','Input/output via variáveis PAD','Instalar dependências no ambiente']},
+   {label:'07.3 SQL / BD',items:['Conectar: SQL Server, MySQL, PG','Executar SELECT, INSERT, UPDATE','Transações com Rollback em erro','Stored procedures e parâmetros']},
+ ]},
+ {id:'m08',lbl:'M08',title:['Boas Práticas','em RPA'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'⭐',topics:[
+   {label:'08.1 Padrões Projeto',items:['Main Flow → Subflows por função','Validar Entrada → Processar dados','Tratar Erro → Logar resultado','Separar: validar, transformar, persistir']},
+   {label:'08.2 Performance',items:['Evitar loops desnecessários','Cache de resultados intermediários','Monitorizar tempos de execução','Retry automático para falhas transitórias']},
+   {label:'08.3 Segurança',items:['Credenciais: variáveis de ambiente','PII: criptografar e mascarar em logs','Auditoria: rastrear toda execução','Sanitizar e validar inputs do usuário']},
+   {label:'08.4 Manutenção',items:['Documentação clara no código','Versionamento e controle de mudanças','Testes com dados reais e edge cases','Alertas automáticos para falhas']},
+ ]},
+ {id:'m09',lbl:'M09',title:['Cloud e','Conectores'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'☁️',topics:[
+   {label:'09.1 Cloud Flows',items:['Automated: evento (arquivo, email)','Instant: manual via botão / app','Scheduled: horário e recorrência','Múltiplos gatilhos por fluxo']},
+   {label:'09.2 Conectores',items:['Microsoft: Teams, SharePoint, Outlook','Google: Sheets, Drive, Gmail','SAP, Salesforce, Jira, SQL Server','500+ conectores disponíveis']},
+   {label:'09.3 Fluxo Híbrido',items:['Cloud recebe evento ou email','→ Chama Desktop Flow via gateway','→ Desktop extrai dados locais','→ Cloud grava em SharePoint / BD']},
+   {label:'09.4 Data Gateway',items:['Acesso a BDs locais da Cloud','Conexão encriptada e segura','Instalação na máquina local','Suporte a múltiplos gateways']},
+ ]},
+ {id:'m10',lbl:'M10',title:['Fluxos Agendados','e Eventos'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'⏰',topics:[
+   {label:'10.1 Recorrência',items:['Diário: mesma hora todo dia','Semanal: dias e horários específicos','Mensal: dia do mês configurável','Customizado: intervalo livre']},
+   {label:'10.2 Gatilhos Evento',items:['Arquivo criado: SharePoint / OneDrive','Email recebido: Outlook / Gmail','Webhook: evento HTTP customizado','Social: Twitter / LinkedIn mentions']},
+   {label:'10.3 Concorrência',items:['Limitar execuções simultâneas','Evitar race conditions em dados','Fila de processamento (queue)','Mutex: exclusão mútua de recursos']},
+ ]},
+ {id:'m11',lbl:'M11',title:['APIs, AI Builder','e Formulários'],grp:'cloud',lvl:'Avançado',hrs:'2h',em:'🤖',topics:[
+   {label:'11.1 Conector HTTP',items:['Métodos: GET, POST, PUT, DELETE','Headers: Authorization, Content-Type','Body: JSON, XML, Form-data','Autenticação: Bearer Token / Basic']},
+   {label:'11.2 Parse JSON',items:['Estruturar respostas da API','Extrair campos aninhados com schema','Tipar dados: string, number, boolean','Gerar schema automaticamente do sample']},
+   {label:'11.3 AI Builder',items:['Invoice Processing (faturas)','Receipt Processing (recibos)','Entity Extraction (entidades texto)','Integrar modelo nos steps do fluxo']},
+   {label:'11.4 Formulários',items:['Campos: Texto, Número, Data','Dropdown, Arquivo, Booleano','Validação: obrigatório, range, padrão','Disparar fluxo com dados do form']},
+ ]},
+ {id:'m12',lbl:'M12',title:['Document Processing','+ Projeto Final'],grp:'cloud',lvl:'Avançado',hrs:'2h',em:'🎯',topics:[
+   {label:'12.1 Objetivo',items:['API que recebe documento Base64','Processa com AI Builder (fatura)','Retorna campos extraídos em JSON','Validação e tratamento robusto de erros']},
+   {label:'12.2 7 Etapas',items:['1. Gatilho HTTP (POST)','2. Parsing: decodificar Base64','3. AI Builder: extrair campos','4-7: Transformar→Validar→Erro→Response']},
+   {label:'12.3 AI + Validação',items:['Extrai: invoiceNumber, date, total','Extrai: vendorName, lineItems','Valida: totalAmount > 0 e date ≤ hoje','Valida: lineItems.length > 0']},
+   {label:'12.4 Response HTTP',items:['200: {status, timestamp, data}','400: VALIDATION_ERROR + detalhes','500: INTERNAL_ERROR + mensagem','Estrutura JSON padronizada']},
+   {label:'12.5 Logging',items:['Data, hora, operação, status final','Entrada: fileName e documentType','Saída: campos extraídos pelo AI','Duração, usuário, IP do cliente']},
+   {label:'12.6 Competências',items:['Cloud Flows profissionais','Processamento com AI Builder','APIs HTTP estruturadas','Integração completa Cloud + Desktop']},
+ ]},
+ {id:'m13',lbl:'M13',title:['Bibliografia','e Recursos'],grp:'recursos',lvl:'Referência',hrs:'—',em:'📚',topics:[
+   {label:'Fundamentos',items:['PAD Overview & Install (docs)','Microsoft Learn — Power Automate','Introdução ao RPA (learn.microsoft)','Power Platform Overview + Tipos de Fluxos']},
+   {label:'Desktop Automation',items:['Variáveis, Expressões, Condições, Loops','CSV, Excel, Web Recording','Erros, Subflows, UI Automation, OCR','PDFs, Regex, Seletores']},
+   {label:'Integração Avançada',items:['PowerShell, Python, VBScript, SQL','Best Practices + Business Guidance','Cloud Flows, Conectores, Data Gateway','Recurrence, Triggers, Concurrency']},
+   {label:'Cloud, APIs & IA',items:['HTTP Action + Parse JSON','AI Builder: Invoice / Document','HTTP Webhooks + Run After','Manual Triggers']},
+   {label:'Comunidade & Certs',items:['Power Users Community (100k+ membros)','GitHub Samples — Microsoft','PL-100: Power Platform App Creator','PL-200/500: Consultant / Architect']},
+ ]},
+];
+
+// ══════════════════════════════════════════════════════
+// CONFIG & PALETTES
+// ══════════════════════════════════════════════════════
+const CF={R1:340,TS:142,MW:162,MH:82,TW:164,TH:38,RW:192,RH:82};
+const GRP={
+ fundamentos:{bg:'#FFFBEB',bdr:'#F0C040',txt:'#92400E'},
+ desktop:    {bg:'#EFF6FF',bdr:'#60A5FA',txt:'#1E40AF'},
+ avancado:   {bg:'#ECFDF5',bdr:'#34D399',txt:'#065F46'},
+ cloud:      {bg:'#F5F3FF',bdr:'#A78BFA',txt:'#4C1D95'},
+ recursos:   {bg:'#F9FAFB',bdr:'#9CA3AF',txt:'#374151'},
+};
+const LVC={'Iniciante':'#F59E0B','Intermediário':'#3B82F6','Avançado':'#10B981','Referência':'#9CA3AF'};
+
+// ══════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════
+const exp=new Set();
+let vp={tx:0,ty:0,s:1},drag=null,isFirstRender=true;
+const NS='http://www.w3.org/2000/svg';
+
+// ══════════════════════════════════════════════════════
+// SVG HELPERS
+// ══════════════════════════════════════════════════════
+function E(tag,a={}){const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(a))e.setAttribute(k,v);return e;}
+function T(text,x,y,a={}){const t=E('text',{x,y,...a});t.textContent=text;return t;}
+function qcurve(x1,y1,x2,y2,bow=32){
+  const mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy)||1;
+  return`M${x1},${y1} Q${mx-dy/len*bow},${my+dx/len*bow} ${x2},${y2}`;
+}
+function mPos(i){const a=(i/MODS.length*2*Math.PI)-Math.PI/2;return{cx:Math.cos(a)*CF.R1,cy:Math.sin(a)*CF.R1,ang:a};}
+function tPos(ang,j){const r=CF.R1+CF.TS*(j+1);return{cx:Math.cos(ang)*r,cy:Math.sin(ang)*r};}
+
+// ══════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════
+function render(){
+  const gc=document.getElementById('gc'),gn=document.getElementById('gn');
+  gc.innerHTML='';gn.innerHTML='';
+  gc.appendChild(E('circle',{cx:0,cy:0,r:CF.R1,fill:'none',stroke:'#D8D8CE','stroke-width':'1','stroke-dasharray':'3,9',opacity:'.65'}));
+
+  MODS.forEach((mod,i)=>{
+    const{cx,cy,ang}=mPos(i),col=GRP[mod.grp];
+    gc.appendChild(E('path',{d:qcurve(0,0,cx,cy,32),stroke:col.bdr,'stroke-width':'2.1','stroke-opacity':'.38',fill:'none'}));
+    if(exp.has(mod.id)){
+      mod.topics.forEach((_,j)=>{
+        const f=j===0?{cx,cy}:tPos(ang,j-1),t=tPos(ang,j);
+        gc.appendChild(E('path',{d:`M${f.cx},${f.cy}L${t.cx},${t.cy}`,stroke:col.bdr,'stroke-width':'1.4','stroke-opacity':'.4','stroke-dasharray':'3,4',fill:'none'}));
+      });
+    }
+  });
+
+  drawRoot(gn);
+  MODS.forEach((mod,i)=>{
+    if(!exp.has(mod.id))return;
+    const{ang}=mPos(i);
+    mod.topics.forEach((topic,j)=>drawTopic(gn,tPos(ang,j),topic,GRP[mod.grp],j));
+  });
+  MODS.forEach((mod,i)=>drawModule(gn,mod,mPos(i),GRP[mod.grp],exp.has(mod.id)));
+
+  if(isFirstRender){
+    isFirstRender=false;
+    const root=gn.querySelector('.root-g');
+    if(root){root.style.opacity='0';setTimeout(()=>{root.style.transition='opacity .5s';root.style.opacity='1';},60);}
+    [...gn.querySelectorAll('.mod-g')].forEach((g,i)=>{g.style.opacity='0';setTimeout(()=>{g.style.transition='opacity .3s';g.style.opacity='1';},130+i*30);});
+    [...gc.childNodes].forEach((p,i)=>{p.style&&(p.style.opacity='0');setTimeout(()=>{p.style&&(p.style.transition='opacity .4s',p.style.opacity='1');},100+i*15);});
+  }
+}
+
+// ── ROOT ─────────────────────────────────────────────
+function drawRoot(p){
+  const g=E('g',{transform:`translate(${-CF.RW/2},${-CF.RH/2})`,class:'root-g'});
+  const W=CF.RW,H=CF.RH;
+  g.appendChild(E('rect',{x:-4,y:-4,width:W+8,height:H+8,rx:18,fill:'#BFDBFE',opacity:'.25',filter:'url(#fm)'}));
+  g.appendChild(E('rect',{width:W,height:H,rx:14,fill:'url(#g-root)',stroke:'#3B82F6','stroke-width':'2.2',filter:'url(#fb)'}));
+  g.appendChild(E('rect',{x:18,y:0,width:W-36,height:2.5,rx:1.2,fill:'#93C5FD',opacity:'.65'}));
+  g.appendChild(E('line',{x1:48,y1:14,x2:48,y2:H-14,stroke:'#BFDBFE','stroke-width':'1'}));
+  g.appendChild(E('circle',{cx:24,cy:H/2,r:14,fill:'#EFF6FF'}));
+  g.appendChild(T('🚀',24,H/2+5,{'text-anchor':'middle','font-size':'17'}));
+  g.appendChild(T('ACSYSTEM',57,H/2-8,{'font-size':'14','font-weight':'800',fill:'#1E3A5F','font-family':'inherit','letter-spacing':'-.3px'}));
+  g.appendChild(T('Solutions',57,H/2+9,{'font-size':'10','font-weight':'700',fill:'#5B8FC8','font-family':'inherit','letter-spacing':'1px'}));
+  g.appendChild(E('rect',{x:W-62,y:H-21,width:56,height:14,rx:6,fill:'#BFDBFE'}));
+  g.appendChild(T('14 módulos · 34h',W-34,H-10,{'text-anchor':'middle','font-size':'7.5','font-weight':'800',fill:'#1E40AF','font-family':'inherit'}));
+  p.appendChild(g);
+}
+
+// ── MODULE ────────────────────────────────────────────
+function drawModule(p,mod,pos,col,isExp){
+  const g=E('g',{transform:`translate(${pos.cx-CF.MW/2},${pos.cy-CF.MH/2})`,class:'mod-g','data-id':mod.id});
+  const W=CF.MW,H=CF.MH;
+  const halo=E('rect',{x:-4,y:-4,width:W+8,height:H+8,rx:14,fill:col.bdr,opacity:'0',class:'halo'});
+  g.appendChild(halo);
+  g.appendChild(E('rect',{width:W,height:H,rx:10,fill:col.bg,stroke:col.bdr,'stroke-width':isExp?'2.2':'1.5',filter:'url(#fs)'}));
+  g.appendChild(E('rect',{x:0,y:10,width:4.5,height:H-20,rx:2.2,fill:col.bdr}));
+  g.appendChild(E('rect',{x:9,y:7,width:36,height:16,rx:4.5,fill:col.bdr}));
+  g.appendChild(T(mod.lbl,27,18.5,{'text-anchor':'middle','font-size':'9.5','font-weight':'800',fill:'white','font-family':'inherit'}));
+  g.appendChild(E('circle',{cx:W-12,cy:13,r:5.5,fill:LVC[mod.lvl]||'#9CA3AF',opacity:'.85'}));
+  g.appendChild(T(mod.em,W-12,H-9,{'text-anchor':'middle','font-size':'12'}));
+  const bY=mod.title.length>1?33:42;
+  mod.title.forEach((ln,i)=>g.appendChild(T(ln,14,bY+i*14,{'font-size':'10.5','font-weight':'700',fill:col.txt,'font-family':'inherit'})));
+  g.appendChild(T(`⏱ ${mod.hrs}`,14,H-9,{'font-size':'8.5',fill:'#AAA','font-family':'inherit'}));
+  const ni=mod.topics.reduce((a,t)=>a+t.items.length,0);
+  g.appendChild(T(isExp?'▲ fechar':`▼ ${mod.topics.length}t · ${ni}i`,W-10,H-9,{'text-anchor':'end','font-size':'8','font-weight':'800',fill:col.bdr,'font-family':'inherit'}));
+  g.addEventListener('click',()=>toggle(mod.id));
+  g.addEventListener('mouseenter',(e)=>{halo.setAttribute('opacity','.09');showModTip(e,mod,col);});
+  g.addEventListener('mouseleave',()=>{halo.setAttribute('opacity','0');hideTip();});
+  p.appendChild(g);
+}
+
+// ── TOPIC ─────────────────────────────────────────────
+function drawTopic(p,pos,topic,col,idx){
+  const g=E('g',{transform:`translate(${pos.cx-CF.TW/2},${pos.cy-CF.TH/2})`,class:'topic-g',style:'opacity:0'});
+  const W=CF.TW,H=CF.TH;
+  g.appendChild(E('rect',{width:W,height:H,rx:9,fill:'white',stroke:col.bdr,'stroke-width':'1.2','stroke-opacity':'.6',filter:'url(#fs)'}));
+  g.appendChild(E('rect',{x:0,y:8,width:4,height:H-16,rx:2,fill:col.bdr}));
+  const lbl=topic.label.length>21?topic.label.slice(0,21)+'…':topic.label;
+  g.appendChild(T(lbl,12,H/2+4,{'font-size':'9.5','font-weight':'700',fill:'#222','font-family':'inherit'}));
+  // badge item count
+  const n=topic.items.length;
+  if(n>0){
+    g.appendChild(E('rect',{x:W-23,y:H/2-8,width:18,height:13,rx:5,fill:col.bdr,opacity:'.75'}));
+    g.appendChild(T(n,W-14,H/2+2.5,{'text-anchor':'middle','font-size':'8','font-weight':'900',fill:'white','font-family':'inherit'}));
+  }
+  g.addEventListener('mouseenter',(e)=>showTopicTip(e,topic,col));
+  g.addEventListener('mouseleave',hideTip);
+  p.appendChild(g);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    g.style.transition=`opacity .22s ease-out ${idx*45}ms`;
+    g.style.opacity='1';
+  }));
+}
+
+// ══════════════════════════════════════════════════════
+// ACTIONS
+// ══════════════════════════════════════════════════════
+function toggle(id){exp.has(id)?exp.delete(id):exp.add(id);const w=isFirstRender;isFirstRender=false;render();isFirstRender=w;}
+
+const ttEl=document.getElementById('tt'),cvs=document.getElementById('canvas');
+
+function showModTip(e,mod,col){
+  const pills=mod.topics.map(t=>`<span class="tt-pill">${t.label} <span style="opacity:.6">(${t.items.length})</span></span>`).join('');
+  ttEl.innerHTML=`<strong>${mod.em} ${mod.lbl}: ${mod.title.join(' ')}</strong>
+    <div class="tt-meta">📚 ${mod.topics.length} tópicos &nbsp;·&nbsp; ⏱ ${mod.hrs} &nbsp;·&nbsp; 🎯 ${mod.lvl}</div>
+    <div class="tt-pills">${pills}</div>`;
+  ttEl.style.opacity='1';moveTip(e);
+}
+
+function showTopicTip(e,topic,col){
+  const rows=topic.items.map(i=>`<div class="tt-row"><span class="tt-dot" style="background:${col.bdr}"></span>${i}</div>`).join('');
+  ttEl.innerHTML=`<strong>📌 ${topic.label}</strong>${rows}`;
+  ttEl.style.opacity='1';moveTip(e);
+}
+
+function hideTip(){ttEl.style.opacity='0';}
+function moveTip(e){
+  const r=cvs.getBoundingClientRect();
+  let lx=e.clientX-r.left+16,ty=e.clientY-r.top-8;
+  if(lx+278>r.width)lx=e.clientX-r.left-282;
+  if(ty+220>r.height)ty=e.clientY-r.top-180;
+  ttEl.style.left=lx+'px';ttEl.style.top=ty+'px';
+}
+cvs.addEventListener('mousemove',(e)=>{if(ttEl.style.opacity==='1')moveTip(e);});
+
+// ── PAN & ZOOM ─────────────────────────────────────────
+const vpEl=document.getElementById('vp');
+function applyVP(){vpEl.setAttribute('transform',`translate(${vp.tx},${vp.ty}) scale(${vp.s})`);}
+function fitScreen(){
+  const W=cvs.clientWidth,H=cvs.clientHeight;
+  const maxR=exp.size>0?CF.R1+CF.TS*6+CF.TH/2+30:CF.R1+CF.MW/2+32;
+  const s=Math.min(W,H)/(maxR*2+60)*.93;
+  vp={tx:W/2,ty:H/2,s};applyVP();
+}
+document.getElementById('mindmap').addEventListener('mousedown',(e)=>{
+  if(e.target.closest('.mod-g,.root-g,.topic-g'))return;
+  drag={sx:e.clientX,sy:e.clientY,tx:vp.tx,ty:vp.ty};cvs.classList.add('panning');
+});
+window.addEventListener('mousemove',(e)=>{if(!drag)return;vp.tx=drag.tx+(e.clientX-drag.sx);vp.ty=drag.ty+(e.clientY-drag.sy);applyVP();});
+window.addEventListener('mouseup',()=>{drag=null;cvs.classList.remove('panning');});
+cvs.addEventListener('wheel',(e)=>{
+  e.preventDefault();
+  const r=cvs.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  const fac=e.deltaY<0?1.1:.91,ns=Math.max(.1,Math.min(5,vp.s*fac)),sc=ns/vp.s;
+  vp.tx=mx-(mx-vp.tx)*sc;vp.ty=my-(my-vp.ty)*sc;vp.s=ns;applyVP();
+},{passive:false});
+let t0=null,lp=0;
+cvs.addEventListener('touchstart',(e)=>{
+  if(e.touches.length===1)t0={sx:e.touches[0].clientX,sy:e.touches[0].clientY,tx:vp.tx,ty:vp.ty};
+  else if(e.touches.length===2)lp=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+},{passive:true});
+cvs.addEventListener('touchmove',(e)=>{
+  e.preventDefault();
+  if(e.touches.length===1&&t0){vp.tx=t0.tx+(e.touches[0].clientX-t0.sx);vp.ty=t0.ty+(e.touches[0].clientY-t0.sy);applyVP();}
+  else if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);vp.s=Math.max(.1,Math.min(5,vp.s*(d/lp)));lp=d;applyVP();}
+},{passive:false});
+cvs.addEventListener('touchend',()=>t0=null,{passive:true});
+function zoomBy(f){
+  const W=cvs.clientWidth/2,H=cvs.clientHeight/2;
+  const ns=Math.max(.1,Math.min(5,vp.s*f)),sc=ns/vp.s;
+  vp.tx=W-(W-vp.tx)*sc;vp.ty=H-(H-vp.ty)*sc;vp.s=ns;applyVP();
+}
+document.getElementById('btn-zi').onclick=()=>zoomBy(1.25);
+document.getElementById('btn-zo').onclick=()=>zoomBy(.8);
+document.getElementById('btn-fit').onclick=fitScreen;
+document.getElementById('btn-exp').onclick=()=>{MODS.forEach(m=>exp.add(m.id));isFirstRender=false;render();setTimeout(fitScreen,60);};
+document.getElementById('btn-col').onclick=()=>{exp.clear();isFirstRender=false;render();fitScreen();};
+window.addEventListener('keydown',(e)=>{
+  if(!e.ctrlKey&&!e.metaKey){
+    if(e.key==='+'||e.key==='=')zoomBy(1.18);
+    else if(e.key==='-')zoomBy(.85);
+    else if(e.key==='f'||e.key==='F')fitScreen();
+    else if(e.key==='Escape'){exp.clear();isFirstRender=false;render();fitScreen();}
+  }
+});
+
+// ══════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════
+const totalItems=MODS.reduce((a,m)=>a+m.topics.reduce((b,t)=>b+t.items.length,0),0);
+document.getElementById('sn-i').textContent=totalItems;
+render();
+requestAnimationFrame(()=>requestAnimationFrame(fitScreen));
+</script>
+</body>
+</html>

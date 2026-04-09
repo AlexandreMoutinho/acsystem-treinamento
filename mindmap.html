@@ -1,0 +1,235 @@
+<script>
+'use strict';
+const MODS=[
+ {id:'m00',lbl:'M00',title:['Instruções','do Curso'],grp:'fundamentos',lvl:'Iniciante',hrs:'1h',em:'📋',topics:[
+   {label:'00.1 Bem-vindo',items:['Visão geral: 13 escopos progressivos','Pré-req: Windows 10/11 + Power Automate','Ambiente: PAD versão mais recente','Suporte: Microsoft Learn + Power Users']},
+   {label:'00.2 Estrutura',items:['M0-1: Fundamentos RPA · 4h · Iniciante','M2-6: Desktop Automation · 12h · Interm.','M7-10: Integração Avançada · 10h · Avç.','M11-12: Cloud + APIs + IA · 8h · Avç.']},
+ ]},
+ {id:'m01',lbl:'M01',title:['Introdução RPA','+ Power Platform'],grp:'fundamentos',lvl:'Iniciante',hrs:'3h',em:'🚀',topics:[
+   {label:'01.1 O que é RPA?',items:['Reduz erros manuais','Aumenta velocidade de processamento','Libera para tarefas estratégicas','Casos: faturas, web scraping, relatórios']},
+   {label:'01.2 Power Platform',items:['Power Automate: Cloud + Desktop Flows','Power Apps: aplicações low-code','Power BI: análise e visualização','Dataverse: base de dados centralizada']},
+   {label:'01.3 Tipos de Fluxos',items:['Cloud Automated: disparo por evento','Cloud Instant: manual (botão)','Cloud Scheduled: recorrência','Desktop Flows: UI, Web, Excel, PDF']},
+ ]},
+ {id:'m02',lbl:'M02',title:['Variáveis,','Condições e Loops'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'🔧',topics:[
+   {label:'02.1 Variáveis',items:['Tipos: Text, Number, Boolean','Tipos: List, Table, DateTime','Inicializar, modificar e utilizar','Escopo: local vs global']},
+   {label:'02.2 Expressões',items:['Operadores: + - * / == != > <','Lógicos: AND, OR, NOT','Funções: concat(), length(), replace()','Data: now(), addDays(), format()']},
+   {label:'02.3 Condições',items:['IF / THEN / ELSE / END IF','Switch / Case para múltiplos valores','Operadores AND, OR aninhados','Condições em blocos de erro']},
+   {label:'02.4 Loops',items:['For Each: iterar listas e tabelas','While: loop com condição booleana','Loop com índice numérico','Exit Loop / Next Iteration']},
+ ]},
+ {id:'m03',lbl:'M03',title:['CSV, Excel e','Automação Web'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'📊',topics:[
+   {label:'03.1 CSV',items:['Ler CSV para DataTable','Escrever linhas no CSV','Configurar separador e encoding','Processar cada linha em loop']},
+   {label:'03.2 Excel',items:['Abrir, ler e escrever células','Criar planilhas e formatar dados','Navegar por abas e linhas','Fechar instância corretamente']},
+   {label:'03.3 Web',items:['Recording de ações no browser','Seletores XPath e CSS','Preencher campos com variáveis','Aguardar elemento carregar']},
+ ]},
+ {id:'m04',lbl:'M04',title:['Tratamento','de Erros'],grp:'desktop',lvl:'Intermediário',hrs:'2h',em:'🛡️',topics:[
+   {label:'04.1 Try-Catch',items:['TRY: executar bloco principal','CATCH: capturar exceção por tipo','FINALLY: fechar conexões sempre','Relação de erros críticos']},
+   {label:'04.2 Logging',items:['Formato: [datetime] LEVEL: contexto','Incluir stack trace do erro','Notificação via email / Teams','Rotacionar logs automaticamente']},
+ ]},
+ {id:'m05',lbl:'M05',title:['Subflows e','UI Automation'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'🧩',topics:[
+   {label:'05.1 Subflows',items:['Fluxo dentro de fluxo (DRY)','Definir parâmetros Input e Output','Modularizar por responsabilidade','Reutilizar em múltiplos projetos']},
+   {label:'05.2 UI Automation',items:['Registar ações de mouse e teclado','OCR para texto em imagens','Seletores: XPath, CSS, ID, Name','Image-based automation (fallback)']},
+ ]},
+ {id:'m06',lbl:'M06',title:['PDFs, Arquivos','e Regex'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'📄',topics:[
+   {label:'06.1 PDFs',items:['Extrair texto completo via OCR','Extrair imagens embedadas','Mesclar e dividir páginas','Preencher campos de formulário PDF']},
+   {label:'06.2 Regex',items:['CPF: ^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$','Email: ^[^@]+@[^@]+\\.[^@]+$','Telefone BR: +55 11 98765-4321','Datas, CEP e valores monetários']},
+ ]},
+ {id:'m07',lbl:'M07',title:['Scripts e','Bases de Dados'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'💾',topics:[
+   {label:'07.1 PowerShell',items:['Automação Windows, AD, Exchange','Executar do PAD e capturar output','Passar parâmetros e ler retorno','Office 365 via cmdlets']},
+   {label:'07.2 Python',items:['Processamento de dados e ML','Integrar bibliotecas (pandas, etc.)','Input/output via variáveis PAD','Instalar dependências no ambiente']},
+   {label:'07.3 SQL',items:['Conectar: SQL Server, MySQL, PG','Executar SELECT, INSERT, UPDATE','Transações com Rollback em erro','Stored procedures e parâmetros']},
+ ]},
+ {id:'m08',lbl:'M08',title:['Boas Práticas','em RPA'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'⭐',topics:[
+   {label:'08.1 Padrões',items:['Main Flow → Subflows por função','Validar Entrada → Processar dados','Tratar Erro → Logar resultado','Separar: validar, transformar, persistir']},
+   {label:'08.2 Performance',items:['Evitar loops desnecessários','Cache de resultados intermediários','Monitorizar tempos de execução','Retry automático para falhas transitórias']},
+   {label:'08.3 Segurança',items:['Credenciais: variáveis de ambiente','PII: criptografar e mascarar em logs','Auditoria: rastrear toda execução','Sanitizar e validar inputs do usuário']},
+   {label:'08.4 Manutenção',items:['Documentação clara no código','Versionamento e controle de mudanças','Testes com dados reais e edge cases','Alertas automáticos para falhas']},
+ ]},
+ {id:'m09',lbl:'M09',title:['Cloud e','Conectores'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'☁️',topics:[
+   {label:'09.1 Cloud Flows',items:['Automated: evento (arquivo, email)','Instant: manual via botão / app','Scheduled: horário e recorrência','Múltiplos gatilhos por fluxo']},
+   {label:'09.2 Conectores',items:['Microsoft: Teams, SharePoint, Outlook','Google: Sheets, Drive, Gmail','SAP, Salesforce, Jira, SQL Server','500+ conectores disponíveis']},
+   {label:'09.3 Híbrido',items:['Cloud recebe evento ou email','→ Chama Desktop Flow via gateway','→ Desktop extrai dados locais','→ Cloud grava em SharePoint / BD']},
+   {label:'09.4 Gateway',items:['Acesso a BDs locais da Cloud','Conexão encriptada e segura','Instalação na máquina local','Suporte a múltiplos gateways']},
+ ]},
+ {id:'m10',lbl:'M10',title:['Fluxos Agendados','e Eventos'],grp:'avancado',lvl:'Avançado',hrs:'2.5h',em:'⏰',topics:[
+   {label:'10.1 Recorrência',items:['Diário: mesma hora todo dia','Semanal: dias e horários específicos','Mensal: dia do mês configurável','Customizado: intervalo livre']},
+   {label:'10.2 Eventos',items:['Arquivo criado: SharePoint / OneDrive','Email recebido: Outlook / Gmail','Webhook: evento HTTP customizado','Social: Twitter / LinkedIn mentions']},
+   {label:'10.3 Concorrência',items:['Limitar execuções simultâneas','Evitar race conditions em dados','Fila de processamento (queue)','Mutex: exclusão mútua de recursos']},
+ ]},
+ {id:'m11',lbl:'M11',title:['APIs, AI Builder','e Formulários'],grp:'cloud',lvl:'Avançado',hrs:'2h',em:'🤖',topics:[
+   {label:'11.1 HTTP',items:['Métodos: GET, POST, PUT, DELETE','Headers: Authorization, Content-Type','Body: JSON, XML, Form-data','Autenticação: Bearer Token / Basic']},
+   {label:'11.2 Parse JSON',items:['Estruturar respostas da API','Extrair campos aninhados com schema','Tipar dados: string, number, boolean','Gerar schema automaticamente do sample']},
+   {label:'11.3 AI Builder',items:['Invoice Processing (faturas)','Receipt Processing (recibos)','Entity Extraction (entidades texto)','Integrar modelo nos steps do fluxo']},
+   {label:'11.4 Formulários',items:['Campos: Texto, Número, Data','Dropdown, Arquivo, Booleano','Validação: obrigatório, range, padrão','Disparar fluxo com dados do form']},
+ ]},
+ {id:'m12',lbl:'M12',title:['Document Processing','+ Projeto Final'],grp:'cloud',lvl:'Avançado',hrs:'2h',em:'🎯',topics:[
+   {label:'12.1 Objetivo',items:['API que recebe documento Base64','Processa com AI Builder (fatura)','Retorna campos extraídos em JSON','Validação e tratamento robusto']},
+   {label:'12.2 7 Etapas',items:['1. Gatilho HTTP (POST)','2. Parsing: decodificar Base64','3. AI Builder: extrair campos','4-7: Transformar→Validar→Erro→Response']},
+   {label:'12.3 Validação',items:['Extrai: invoiceNumber, date, total','Extrai: vendorName, lineItems','Valida: totalAmount > 0 e date ≤ hoje','Valida: lineItems.length > 0']},
+   {label:'12.4 Response',items:['200: {status, timestamp, data}','400: VALIDATION_ERROR + detalhes','500: INTERNAL_ERROR + mensagem','Estrutura JSON padronizada']},
+   {label:'12.5 Logging',items:['Data, hora, operação, status final','Entrada: fileName e documentType','Saída: campos extraídos pelo AI','Duração, usuário, IP do cliente']},
+   {label:'12.6 Competências',items:['Cloud Flows profissionais','Processamento com AI Builder','APIs HTTP estruturadas','Integração completa Cloud + Desktop']},
+ ]},
+ {id:'m13',lbl:'M13',title:['Bibliografia','e Recursos'],grp:'recursos',lvl:'Referência',hrs:'—',em:'📚',topics:[
+   {label:'Fundamentos',items:['PAD Overview & Install (docs)','Microsoft Learn — Power Automate','Introdução ao RPA (learn.microsoft)','Power Platform Overview + Tipos de Fluxos']},
+   {label:'Desktop',items:['Variáveis, Expressões, Condições, Loops','CSV, Excel, Web Recording','Erros, Subflows, UI Automation, OCR','PDFs, Regex, Seletores']},
+   {label:'Integração',items:['PowerShell, Python, VBScript, SQL','Best Practices + Business Guidance','Cloud Flows, Conectores, Data Gateway','Recurrence, Triggers, Concurrency']},
+   {label:'Cloud & IA',items:['HTTP Action + Parse JSON','AI Builder: Invoice / Document','HTTP Webhooks + Run After','Manual Triggers']},
+   {label:'Comunidade',items:['Power Users Community (100k+ membros)','GitHub Samples — Microsoft','PL-100: Power Platform App Creator','PL-200/500: Consultant / Architect']},
+ ]},
+];
+const CF={R1:340,TS:142,MW:162,MH:82,TW:164,TH:38,RW:192,RH:82};
+const GRP={fundamentos:{bg:'#FFFBEB',bdr:'#F0C040',txt:'#92400E'},desktop:{bg:'#EFF6FF',bdr:'#60A5FA',txt:'#1E40AF'},avancado:{bg:'#ECFDF5',bdr:'#34D399',txt:'#065F46'},cloud:{bg:'#F5F3FF',bdr:'#A78BFA',txt:'#4C1D95'},recursos:{bg:'#F9FAFB',bdr:'#9CA3AF',txt:'#374151'}};
+const LVC={'Iniciante':'#F59E0B','Intermediário':'#3B82F6','Avançado':'#10B981','Referência':'#9CA3AF'};
+const exp=new Set();
+let vp={tx:0,ty:0,s:1},drag=null,isFirstRender=true;
+const NS='http://www.w3.org/2000/svg';
+function E(tag,a={}){const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(a))e.setAttribute(k,v);return e;}
+function T(text,x,y,a={}){const t=E('text',{x,y,...a});t.textContent=text;return t;}
+function qcurve(x1,y1,x2,y2,bow=32){const mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy)||1;return`M${x1},${y1} Q${mx-dy/len*bow},${my+dx/len*bow} ${x2},${y2}`;}
+function mPos(i){const a=(i/MODS.length*2*Math.PI)-Math.PI/2;return{cx:Math.cos(a)*CF.R1,cy:Math.sin(a)*CF.R1,ang:a};}
+function tPos(ang,j){const r=CF.R1+CF.TS*(j+1);return{cx:Math.cos(ang)*r,cy:Math.sin(ang)*r};}
+function render(){
+  const gc=document.getElementById('gc'),gn=document.getElementById('gn');
+  gc.innerHTML='';gn.innerHTML='';
+  gc.appendChild(E('circle',{cx:0,cy:0,r:CF.R1,fill:'none',stroke:'#D8D8CE','stroke-width':'1','stroke-dasharray':'3,9',opacity:'.65'}));
+  MODS.forEach((mod,i)=>{
+    const{cx,cy,ang}=mPos(i),col=GRP[mod.grp];
+    gc.appendChild(E('path',{d:qcurve(0,0,cx,cy,32),stroke:col.bdr,'stroke-width':'2.1','stroke-opacity':'.38',fill:'none'}));
+    if(exp.has(mod.id)){mod.topics.forEach((_,j)=>{const f=j===0?{cx,cy}:tPos(ang,j-1),t=tPos(ang,j);gc.appendChild(E('path',{d:`M${f.cx},${f.cy}L${t.cx},${t.cy}`,stroke:col.bdr,'stroke-width':'1.4','stroke-opacity':'.4','stroke-dasharray':'3,4',fill:'none'}));});}
+  });
+  drawRoot(gn);
+  MODS.forEach((mod,i)=>{if(!exp.has(mod.id))return;const{ang}=mPos(i);mod.topics.forEach((topic,j)=>drawTopic(gn,tPos(ang,j),topic,GRP[mod.grp],j));});
+  MODS.forEach((mod,i)=>drawModule(gn,mod,mPos(i),GRP[mod.grp],exp.has(mod.id)));
+  if(isFirstRender){isFirstRender=false;const root=gn.querySelector('.root-g');if(root){root.style.opacity='0';setTimeout(()=>{root.style.transition='opacity .5s';root.style.opacity='1';},60);}[...gn.querySelectorAll('.mod-g')].forEach((g,i)=>{g.style.opacity='0';setTimeout(()=>{g.style.transition='opacity .3s';g.style.opacity='1';},130+i*30);});}
+}
+function drawRoot(p){
+  const g=E('g',{transform:`translate(${-CF.RW/2},${-CF.RH/2})`,class:'root-g'});
+  const W=CF.RW,H=CF.RH;
+  g.appendChild(E('rect',{x:-4,y:-4,width:W+8,height:H+8,rx:18,fill:'#BFDBFE',opacity:'.25',filter:'url(#fm)'}));
+  g.appendChild(E('rect',{width:W,height:H,rx:14,fill:'url(#g-root)',stroke:'#3B82F6','stroke-width':'2.2',filter:'url(#fb)'}));
+  g.appendChild(E('line',{x1:48,y1:14,x2:48,y2:H-14,stroke:'#BFDBFE','stroke-width':'1'}));
+  g.appendChild(E('circle',{cx:24,cy:H/2,r:14,fill:'#EFF6FF'}));
+  g.appendChild(T('🚀',24,H/2+5,{'text-anchor':'middle','font-size':'17'}));
+  g.appendChild(T('ACSYSTEM',57,H/2-8,{'font-size':'14','font-weight':'800',fill:'#1E3A5F','font-family':'inherit','letter-spacing':'-.3px'}));
+  g.appendChild(T('Solutions',57,H/2+9,{'font-size':'10','font-weight':'700',fill:'#5B8FC8','font-family':'inherit','letter-spacing':'1px'}));
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACSYSTEM Solutions — Mapa Mental do Treinamento</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#F5F5F0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+body{display:flex;flex-direction:column}
+#hdr{display:flex;align-items:center;gap:12px;padding:0 18px;height:58px;background:#fff;border-bottom:1.5px solid #EAEAE4;box-shadow:0 2px 10px rgba(0,0,0,.05);flex-shrink:0;z-index:20}
+#hdr img{height:36px;object-fit:contain;display:block}
+.hdr-sep{width:1px;height:30px;background:#EAEAE4;flex-shrink:0}
+#hdr-info{flex:1;min-width:0}
+#hdr-info h1{font-size:13.5px;font-weight:800;color:#1A1A2E;line-height:1.2;letter-spacing:-.2px}
+#hdr-info p{font-size:10.5px;color:#999;margin-top:2px;font-weight:500}
+.badge-row{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.badge{padding:3px 8px;border-radius:20px;font-size:9.5px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
+.b-f{background:#FEF9C3;color:#713F12}.b-d{background:#DBEAFE;color:#1E40AF}
+.b-a{background:#D1FAE5;color:#065F46}.b-c{background:#EDE9FE;color:#5B21B6}
+.b-r{background:#F3F4F6;color:#374151}
+.ctrl-row{display:flex;align-items:center;gap:4px}
+.cbtn{display:flex;align-items:center;justify-content:center;height:28px;min-width:28px;padding:0 7px;border:1px solid #E0E0DC;border-radius:7px;background:#fff;cursor:pointer;font-size:12px;font-weight:700;color:#444;transition:background .1s,border-color .1s,color .1s;gap:4px;white-space:nowrap}
+.cbtn:hover{background:#F4F4EF;border-color:#C8C8C0;color:#111}
+#canvas{flex:1;position:relative;overflow:hidden;cursor:grab;user-select:none}
+#canvas.panning{cursor:grabbing}
+#mindmap{width:100%;height:100%;display:block;touch-action:none}
+#legend{position:absolute;bottom:14px;left:14px;background:rgba(255,255,255,.96);border:1px solid #E8E8E2;border-radius:12px;padding:11px 14px 10px;box-shadow:0 2px 16px rgba(0,0,0,.07);pointer-events:none;backdrop-filter:blur(8px)}
+#legend h4{font-size:9.5px;font-weight:800;color:#AAA;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.li{display:flex;align-items:center;gap:7px;margin-bottom:4px;font-size:10.5px;color:#555;font-weight:600}
+.li:last-child{margin-bottom:0}
+.ld{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+#stats{position:absolute;top:12px;right:14px;background:rgba(255,255,255,.96);border:1px solid #E8E8E2;border-radius:12px;padding:9px 14px;box-shadow:0 2px 16px rgba(0,0,0,.06);pointer-events:none;backdrop-filter:blur(8px);display:flex;gap:16px}
+.stat{text-align:center}
+.stat-n{font-size:18px;font-weight:800;color:#1A1A2E;line-height:1}
+.stat-l{font-size:9px;font-weight:700;color:#BBB;margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
+#hint{position:absolute;bottom:14px;right:14px;font-size:10px;color:#CCC;pointer-events:none;letter-spacing:.1px}
+#tt{position:absolute;top:0;left:0;background:rgba(13,13,26,.93);color:#fff;padding:11px 14px;border-radius:11px;font-size:11px;line-height:1.6;max-width:268px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:99;box-shadow:0 4px 24px rgba(0,0,0,.25)}
+#tt strong{font-weight:800;font-size:12px;display:block;margin-bottom:5px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:5px}
+#tt .tt-row{display:flex;align-items:flex-start;gap:5px;margin-top:3px;font-size:10.5px;opacity:.88}
+#tt .tt-dot{flex-shrink:0;margin-top:4px;width:5px;height:5px;border-radius:50%;display:inline-block}
+.tt-meta{font-size:10px;opacity:.65;margin-bottom:4px}
+.tt-pills{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.tt-pill{padding:2px 6px;border-radius:20px;font-size:8.5px;font-weight:700;background:rgba(255,255,255,.14)}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <img src="https://horizons-cdn.hostinger.com/8328241e-4b13-4d64-b4a8-945ae1fd6038/1247a1545e162c188985c2fd54a69974.png" alt="ACSYSTEM Solutions"
+       onerror="this.style.display='none';document.getElementById('lf').style.display='flex'">
+  <div id="lf" style="display:none;align-items:center;gap:6px;font-weight:900;font-size:14px;color:#2563EB;white-space:nowrap">
+    <span style="font-size:18px">🚀</span> ACSYSTEM Solutions
+  </div>
+  <div class="hdr-sep"></div>
+  <div id="hdr-info">
+    <h1>Mapa Mental do Treinamento</h1>
+    <p>ACSYSTEM Solutions — Power Automate Desktop &amp; Cloud | 14 Módulos · 34h · 47 Tópicos</p>
+  </div>
+  <div class="badge-row">
+    <span class="badge b-f">Iniciante</span>
+    <span class="badge b-d">Intermediário</span>
+    <span class="badge b-a">Avançado</span>
+    <span class="badge b-c">Cloud + IA</span>
+    <span class="badge b-r">Referência</span>
+  </div>
+  <div class="hdr-sep"></div>
+  <div class="ctrl-row">
+    <button class="cbtn" id="btn-zi" title="Zoom In (+)">＋</button>
+    <button class="cbtn" id="btn-zo" title="Zoom Out (-)">－</button>
+    <button class="cbtn" id="btn-fit" style="padding:0 10px;font-size:11px" title="Ajustar (F)">⊞ Fit</button>
+    <button class="cbtn" id="btn-exp" style="padding:0 10px;font-size:11px">▼ Expandir</button>
+    <button class="cbtn" id="btn-col" style="padding:0 10px;font-size:11px">▲ Recolher</button>
+  </div>
+</div>
+<div id="canvas">
+  <svg id="mindmap" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="fs" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#000" flood-opacity=".065"/></filter>
+      <filter id="fm" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity=".09"/></filter>
+      <filter id="fb" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#3B82F6" flood-opacity=".2"/></filter>
+      <pattern id="pdots" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx=".7" cy=".7" r=".7" fill="#C0C0B6" opacity=".55"/></pattern>
+      <linearGradient id="g-root" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FFFFFF"/><stop offset="100%" style="stop-color:#EFF6FF"/></linearGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="#F5F5F0"/>
+    <rect width="100%" height="100%" fill="url(#pdots)"/>
+    <g id="vp"><g id="gc"></g><g id="gn"></g></g>
+  </svg>
+  <div id="legend">
+    <h4>Trilhas de Aprendizagem</h4>
+    <div class="li"><div class="ld" style="background:#F0C040"></div>Fundamentos (M00–M01) · 4h</div>
+    <div class="li"><div class="ld" style="background:#60A5FA"></div>Desktop Automation (M02–M06) · 12h</div>
+    <div class="li"><div class="ld" style="background:#34D399"></div>Integração Avançada (M07–M10) · 10h</div>
+    <div class="li"><div class="ld" style="background:#A78BFA"></div>Cloud + APIs + IA (M11–M12) · 8h</div>
+    <div class="li"><div class="ld" style="background:#9CA3AF"></div>Recursos &amp; Bibliografia (M13)</div>
+  </div>
+  <div id="stats">
+    <div class="stat"><div class="stat-n">14</div><div class="stat-l">Módulos</div></div>
+    <div class="stat"><div class="stat-n">34h</div><div class="stat-l">Conteúdo</div></div>
+    <div class="stat"><div class="stat-n">47</div><div class="stat-l">Tópicos</div></div>
+    <div class="stat"><div class="stat-n" id="sn-i">0</div><div class="stat-l">Itens</div></div>
+  </div>
+  <div id="hint">🖱 Clique nos módulos para expandir · Hover nos tópicos para ver detalhes · Scroll = zoom · F = Fit</div>
+  <div id="tt"></div>
+</div>
+<script>
+'use strict';
+const MODS=[
+ {id:'m00',lbl:'M00',title:['Instruções','do Curso'],grp:'fundamentos',lvl:'Iniciante',hrs:'1h',em:'📋',topics:[
+   {label:'00.1 Bem-vindo',items:['Visão geral: 13 escopos progressivos','Pré-req: Windows 10/11 + Power Automate','Ambiente: PAD versão mais recente','Suporte: Microsoft Learn + Power Users']},
+   {label:'00.2 Estrutura',items:['M0-1: Fundamentos RPA · 4h · Iniciante','M2-6: Desktop Automation · 12h · Interm.','M7-10: Integração Avançada · 10h · Avç.','M11-12: Cloud + APIs + IA · 8h · Avç.']},
+ ]},
+ {id:'m01',lbl:'M01',title:['Introdução RPA','+ Power Platform'],grp:'fundamentos',lvl:'Iniciante',hrs:'3h',em:'🚀',topics:[
+   {label:'01.1 O que é RPA?',items:['Reduz erros manuais','Aumenta velocidade de processamento','Libera para tarefas estratégicas','Casos: faturas, web scraping, relatórios']},
+   {label:'01.2 Power Platform',items:['Power Automate: Cloud + Desktop Flows','Power Apps: aplicações low-code','Power BI: análise e visualização','Dataverse: base de dados centralizada']},
+   {label:'01.3 Tipos de Fluxos',items:['Cloud Automated: disparo por evento','Cloud Instant: manual (botão)','Cloud Scheduled: recorrência','Desktop Flows: UI, Web, Excel, PDF']},
+ ]},
+ {id:'m02',lbl:'M02',title:['Variáveis,','Condições e Loops'],grp:'desktop',lvl:'Intermediário',hrs:'2.5h',em:'🔧',topics:[
+   {label:'02.1 Variáveis',items:['Tipos: Text, Number, Boolean','Tipos: List, Table, DateTime','Inicializar, modificar e utilizar','Escopo: local vs global']},
+   {label:'02.2 Expressões',items:['Operadores: + - * / == != > <','Lógicos: AND, OR, NOT','Funções: concat(), length(), replace()','Data: now(), addDays(), format()']},
+   {label:'02.3 Condições',items:['IF / THEN / ELSE / END IF','Switch / Case para múltiplos valores','Operadores AND, OR aninhados','Condições em blocos de erro']},
+   {label:'02.4 Loops',items:['For Each: iterar listas e tabelas','While: loop com condição booleana','Loop com índice numérico','Exit Loop / Next Iteration']},
+ ]},
